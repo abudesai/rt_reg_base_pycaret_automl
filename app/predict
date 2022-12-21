@@ -7,6 +7,7 @@ import warnings
 
 warnings.filterwarnings("ignore")
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # or any {'0', '1', '2'}
+os.environ["MPLCONFIGDIR"] = os.getcwd() + "/configs/"
 
 import algorithm.model_server as model_server
 import algorithm.utils as utils
@@ -37,7 +38,7 @@ def predict():
         # instantiate the trained model (does lazy loading)
         predictor = model_server.ModelServer(model_path, data_schema)
         # make predictions
-        predictions = predictor.predict_proba(test_data)
+        predictions = predictor.predict(test_data)
         # save results
         utils.save_dataframe(predictions, testing_outputs_path, test_pred_file_name)
         print("Done test predictions.")
